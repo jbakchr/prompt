@@ -1,68 +1,20 @@
 import typer
 
-from prompt.prompts.builder import build_prompt
+from prompt.commands.create import create as create_command
 
 app = typer.Typer(
     help="Create, improve and review AI prompts."
 )
 
 
-@app.command()
+@app.callback()
+def callback():
+    pass
+
+
+@app.command(name="create")
 def create():
-    """
-    Create a new prompt.
-    """
-
-    typer.echo()
-    typer.echo("Let's create a prompt.")
-    typer.echo()
-
-    goal = typer.prompt(
-        "What is the goal?",
-        default="",
-        show_default=False,
-    )
-
-    audience = typer.prompt(
-        "Who is the intended audience?",
-        default="",
-        show_default=False,
-    )
-
-    role = typer.prompt(
-        "Should the AI take on a role?",
-        default="",
-        show_default=False,
-    )
-
-    instructions = typer.prompt(
-        "Any specific instructions?",
-        default="",
-        show_default=False,
-    )
-
-    output_format = typer.prompt(
-        "Desired output format?",
-        default="",
-        show_default=False,
-    )
-
-    prompt_text = build_prompt(
-        goal=goal,
-        audience=audience,
-        role=role,
-        instructions=instructions,
-        output_format=output_format,
-    )
-
-    typer.echo()
-    typer.echo("=" * 60)
-    typer.echo("Generated Prompt")
-    typer.echo("=" * 60)
-    typer.echo()
-    typer.echo(prompt_text)
-    typer.echo()
-
+    create_command()
 
 if __name__ == "__main__":
     app()
