@@ -4,7 +4,7 @@ from ollama import chat
 class AIClient:
     def __init__(
         self,
-        model: str = "llama3.2",
+        model: str = "qwen3:8b",
     ) -> None:
         self.model = model
 
