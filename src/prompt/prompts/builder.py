@@ -1,38 +1,47 @@
 from textwrap import dedent
 
 
-def build_prompt(
+def build_prompt_generation_request(
     goal: str,
     audience: str,
     role: str,
     instructions: str,
     output_format: str,
 ) -> str:
-    sections = []
-
-    if role:
-        sections.append(
-            f"You are a {role}."
-        )
-
-    if goal:
-        if audience:
-            sections.append(
-                f"{goal} for {audience}."
-            )
-        else:
-            sections.append(goal)
-
-    if instructions:
-        sections.append(
-            f"Instructions:\n{instructions}"
-        )
-
-    if output_format:
-        sections.append(
-            f"Output Format:\n{output_format}"
-        )
+    audience = audience or "Not specified"
+    role = role or "Not specified"
+    instructions = instructions or "Not specified"
+    output_format = output_format or "Not specified"
 
     return dedent(
-        "\n\n".join(sections)
+        f"""
+        You are an expert prompt engineer.
+
+        Generate a high-quality prompt based on the following requirements.
+
+        Goal:
+        {goal}
+
+        Audience:
+        {audience}
+
+        Role:
+        {role}
+
+        Additional Instructions:
+        {instructions}
+
+        Output Format:
+        {output_format}
+
+        Guidelines:
+
+        - Generate a prompt that can be used directly with an AI model.
+        - Include role information when relevant.
+        - Include audience information when relevant.
+        - Add useful structure if appropriate.
+        - Keep the prompt clear and concise.
+        - Avoid unnecessary verbosity.
+        - Return only the generated prompt.
+        """
     ).strip()

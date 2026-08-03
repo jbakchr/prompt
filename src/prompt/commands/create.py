@@ -1,6 +1,7 @@
 import typer
 
-from prompt.prompts.builder import build_prompt
+from prompt.ai.client import AIClient
+from prompt.prompts.builder import build_prompt_generation_request
 
 
 def create() -> None:
@@ -42,13 +43,25 @@ def create() -> None:
         show_default=False,
     )
 
-    prompt_text = build_prompt(
+    request = build_prompt_generation_request(
         goal=goal,
         audience=audience,
         role=role,
         instructions=instructions,
         output_format=output_format,
     )
+
+    client = AIClient()
+
+    try:
+        prompt_text = client.generate_prompt(request)
+
+    except RuntimeError as error:
+        typer.echo(
+            f"Error: {error}",
+            err=True,
+        )
+        raise typer.Exit(code=1)
 
     typer.echo()
     typer.echo("=" * 60)
