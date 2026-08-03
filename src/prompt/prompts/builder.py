@@ -15,33 +15,37 @@ def build_prompt_generation_request(
 
     return dedent(
         f"""
-        You are an expert prompt engineer.
+You are an expert prompt engineer.
 
-        Generate a high-quality prompt based on the following requirements.
+Your task is to generate a prompt for another AI.
 
-        Goal:
-        {goal}
+Requirements:
 
-        Audience:
-        {audience}
+Goal:
+{goal}
 
-        Role:
-        {role}
+Audience:
+{audience}
 
-        Additional Instructions:
-        {instructions}
+Role:
+{role}
 
-        Output Format:
-        {output_format}
+Instructions:
+{instructions}
 
-        Guidelines:
+Output Format:
+{output_format}
 
-        - Generate a prompt that can be used directly with an AI model.
-        - Include role information when relevant.
-        - Include audience information when relevant.
-        - Add useful structure if appropriate.
-        - Keep the prompt clear and concise.
-        - Avoid unnecessary verbosity.
-        - Return only the generated prompt.
-        """
-    ).strip()
+Rules:
+
+- Use the provided requirements.
+- Do not invent new requirements.
+- Do not introduce placeholders unless absolutely necessary.
+- Do not explain your reasoning.
+- Do not describe the prompt.
+- Do not provide commentary.
+- Return only the generated prompt.
+- The generated prompt should be immediately usable.
+
+Generate the prompt now.
+""").strip()
