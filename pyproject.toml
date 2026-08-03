@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prompt"
+version = "0.1.0"
+description = "A CLI for creating, improving, and reviewing AI prompts."
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "typer",
+]
+
+[project.scripts]
+prompt = "prompt.main:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
