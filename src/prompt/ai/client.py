@@ -1,10 +1,13 @@
 from ollama import chat
 
+# qwen3:8b
+
+# gpt-oss:120b-cloud
 
 class AIClient:
     def __init__(
         self,
-        model: str = "qwen3:8b",
+        model: str = "gpt-oss:120b-cloud",
     ) -> None:
         self.model = model
 

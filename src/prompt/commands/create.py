@@ -14,7 +14,7 @@ def create() -> None:
     typer.echo()
 
     goal = typer.prompt(
-        "What is the goal?",
+        "What should the AI do?",
         default="",
         show_default=False,
     )
@@ -26,7 +26,7 @@ def create() -> None:
     )
 
     role = typer.prompt(
-        "Should the AI take on a role?",
+        "What role should the AI take on?",
         default="",
         show_default=False,
     )

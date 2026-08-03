@@ -17,7 +17,9 @@ def build_prompt_generation_request(
         f"""
 You are an expert prompt engineer.
 
-Your task is to generate a prompt for another AI.
+Your task is to generate the final prompt that will be used directly with another AI.
+
+The generated prompt should be practical, well-structured, and immediately usable.
 
 Requirements:
 
@@ -36,16 +38,52 @@ Instructions:
 Output Format:
 {output_format}
 
+The generated prompt should include:
+
+- The specified role (when provided)
+- A clear task description
+- Any additional instructions
+- Output formatting requirements (when provided)
+
+Prompt Structure:
+
+1. Role statement
+2. Task description
+3. Additional instructions
+4. Output requirements
+5. Input placeholder (if needed)
+
+Example:
+
+You are an experienced Python developer.
+
+Summarize the following article for Python developers.
+
+Focus on:
+- Key concepts
+- Practical takeaways
+
+Use bullet points.
+
+Article:
+
+{{article}}
+
 Rules:
 
-- Use the provided requirements.
-- Do not invent new requirements.
-- Do not introduce placeholders unless absolutely necessary.
-- Do not explain your reasoning.
-- Do not describe the prompt.
-- Do not provide commentary.
-- Return only the generated prompt.
-- The generated prompt should be immediately usable.
+- Return ONLY the generated prompt.
+- Do NOT explain the prompt.
+- Do NOT describe the prompt.
+- Do NOT add commentary.
+- Do NOT introduce new requirements.
+- Do NOT invent topics.
+- Do NOT invent placeholders unless they are required as input.
+- Use only the requirements provided by the user.
+- Do not add additional instructions that were not requested.
+- The generated prompt should resemble the structure and style of the example above.
+- Start directly with the generated prompt.
+- The generated prompt must be ready to copy and use immediately.
 
 Generate the prompt now.
-""").strip()
+"""
+    ).strip()
