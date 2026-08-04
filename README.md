@@ -2,11 +2,17 @@
 
 A CLI for creating, improving, and reviewing AI prompts.
 
-`prompt` helps you craft better prompts by guiding you through a small set of questions about your goal, audience, role, instructions, and desired output.
+`prompt` helps you generate better prompts by guiding you through a small set of questions about:
+
+- What the AI should do
+- Who the audience is
+- What role the AI should take on
+- Any special instructions
+- Desired output format
 
 The goal is not to generate the perfect prompt.
 
-The goal is to generate a good starting prompt that can be refined over time, either by you or by the CLI itself.
+The goal is to generate a strong starting prompt that can be refined over time.
 
 ---
 
@@ -16,20 +22,20 @@ Writing prompts often starts with a simple idea:
 
 > "I want the AI to summarize an article."
 
-However, getting consistently useful output usually requires additional context:
+However, producing consistently useful results often requires additional context:
 
 - Who is the intended audience?
-- Should the AI take on a specific role?
+- What role should the AI take on?
 - Are there any special requirements?
-- What output format should be used?
+- How should the response be formatted?
 
-Instead of staring at an empty editor, `prompt` asks these questions for you and generates a prompt draft that is ready to use.
+Instead of staring at a blank editor, `prompt` helps you think through these questions and uses AI to generate a prompt you can immediately use or improve further.
 
 ---
 
 ## Features
 
-### Create Prompts
+### ✅ Create Prompts
 
 Generate a prompt from a guided question flow.
 
@@ -37,101 +43,113 @@ Generate a prompt from a guided question flow.
 prompt create
 ```
 
+The CLI asks questions such as:
+
+```text
+What should the AI do?
+Who is the intended audience?
+What role should the AI take on?
+Any specific instructions?
+Desired output format?
+```
+
+Each question includes:
+
+- Helpful tips
+- Example answers
+- The ability to skip a question
+
 Example:
 
 ```text
-What is the goal?
-> Summarize a Python article
+💬 DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.
 
-Who is the intended audience?
-> Intermediate Python developers
+Question 1 of 5
 
-Should the AI take on a role?
-> Experienced Python developer
+What should the AI do?
 
-Any specific instructions?
-> Focus on practical takeaways
-
-Desired output format?
-> Markdown bullet points
+Examples:
+- Summarize the following article
+- Review the provided Python code
+- Create a learning roadmap for FastAPI
 ```
 
-Generated prompt:
+Once all questions are answered, an AI generates a starting prompt.
+
+Example output:
 
 ```text
 You are an experienced Python developer.
 
-Summarize the following article for intermediate Python developers.
+Summarize the following article for beginner Python developers.
 
 Focus on:
-- Key concepts
-- Practical takeaways
+- Practical explanations
+- Easy-to-understand language
 
-Use Markdown bullet points.
+Use bullet points.
 
 Article:
+
 {article}
 ```
 
 ---
 
-### Improve Existing Prompts
+### 🧠 AI-Powered Prompt Generation
 
-Improve an existing prompt based on specific issues or desired changes.
+`prompt` uses an AI model to transform your answers into a structured prompt.
 
-```bash
-prompt improve summarize.md
-```
+The generated prompt:
+
+- Includes relevant context
+- Includes roles when appropriate
+- Includes output requirements
+- Can be copied and used immediately
+
+---
+
+### 🤖 Generated Prompt Display
+
+Generated prompts are displayed in a dedicated panel for easy reading and copying.
 
 Example:
 
 ```text
-What would you like to improve?
-
-> The summary is too long
+╭──────────── 🤖 Generated Prompt ────────────╮
+│ You are an experienced Python developer.    │
+│                                              │
+│ Summarize the following article...           │
+│                                              │
+│ Article:                                     │
+│ {article}                                    │
+╰──────────────────────────────────────────────╯
 ```
-
-The AI analyzes the prompt and generates an improved version.
-
-Possible improvement requests:
-
-- Too verbose
-- Too short
-- Wrong audience
-- Missing structure
-- Produces too much code
-- Produces too little code
-- Not specific enough
-- Too generic
-- Other
 
 ---
 
-### Review Prompts
+### 👉 Suggested Next Steps
 
-Review a prompt and receive constructive feedback.
+After generating a prompt, the CLI suggests possible next actions.
 
-```bash
-prompt review summarize.md
-```
-
-Example output:
+Example:
 
 ```text
-Strengths
----------
-- Clear goal
-- Well-defined audience
+👉 Suggested Next Steps
 
-Weaknesses
-----------
-- No length constraints
-- Output format could be clearer
+• Use the generated prompt as a starting point.
 
-Suggestions
------------
-- Add a maximum length
-- Specify whether examples should be included
+• Save the generated prompt:
+  prompt create --save
+
+• Try generating the prompt with a different model:
+  prompt create --model <model-name>
+
+• Improve a prompt:
+  prompt improve <prompt-file>
+
+• Review a prompt:
+  prompt review <prompt-file>
 ```
 
 ---
@@ -140,23 +158,24 @@ Suggestions
 
 ### Good Enough First
 
-The goal of `prompt` is not to generate giant, complicated prompts.
+The goal of `prompt` is not to generate giant, over-engineered prompts.
 
-The goal is to generate a solid first version that can be refined and improved over time.
+The goal is to generate a strong starting point that can be refined over time.
 
 ---
 
-### Guided Prompt Creation
+### Better Questions Lead To Better Prompts
 
-The CLI focuses on a handful of questions that frequently improve prompt quality:
+Prompt quality often depends on the information provided.
 
-- Goal
-- Audience
-- Role
-- Instructions
-- Output format
+`prompt` helps users provide:
 
-These questions help provide the context that an AI often needs to produce better results.
+- Better task descriptions
+- Better audience definitions
+- Better role definitions
+- Better instructions
+
+Which leads to better generated prompts.
 
 ---
 
@@ -184,10 +203,22 @@ Use Improved Prompt
 
 ### Create
 
-Create a new prompt from a guided series of questions.
+Generate a prompt through a guided question flow.
 
 ```bash
 prompt create
+```
+
+Generate using a specific model:
+
+```bash
+prompt create --model qwen3:8b
+```
+
+Save the generated prompt:
+
+```bash
+prompt create --save
 ```
 
 ---
@@ -200,6 +231,8 @@ Improve an existing prompt.
 prompt improve <prompt-file>
 ```
 
+Planned.
+
 ---
 
 ### Review
@@ -210,83 +243,85 @@ Review a prompt and receive suggestions for improvement.
 prompt review <prompt-file>
 ```
 
+Planned.
+
 ---
 
 ## Example Workflow
 
-Create a new prompt:
+Generate a prompt:
 
 ```bash
 prompt create
 ```
 
-Save the generated prompt:
+Copy and use the generated prompt.
 
-```text
-prompts/summarize-python-article.md
-```
-
-Review the prompt:
+Optionally save it:
 
 ```bash
-prompt review prompts/summarize-python-article.md
+prompt create --save
 ```
 
-Improve the prompt:
+Experiment with different models:
 
 ```bash
-prompt improve prompts/summarize-python-article.md
+prompt create --model qwen3:8b
 ```
 
-Use the updated prompt with your preferred AI model.
+Later:
+
+```bash
+prompt review my-prompt.md
+prompt improve my-prompt.md
+```
 
 ---
 
-## Future Ideas
+## Current Status
 
-Potential future enhancements:
+### Implemented
 
-- Prompt templates
-- Prompt version history
-- Prompt comparisons
-- Prompt scoring
-- Prompt libraries
-- Interactive refinement sessions
-- Export to Markdown
-- Export to clipboard
+✅ Interactive prompt creation
 
----
+✅ Rich-based terminal interface
 
-## Project Status
+✅ Question panels with tips and examples
 
-Early project idea.
+✅ AI-powered prompt generation
 
-The initial focus is intentionally small:
+✅ Prompt generation spinner
 
-```bash
-prompt create
-prompt improve
-prompt review
-```
+✅ Generated prompt display panel
 
-The goal is to make these commands genuinely useful before adding more features.
+✅ Suggested next steps section
+
+### Planned
+
+- Save generated prompts
+- Prompt improvement
+- Prompt review
+- Prompt comparison
+- Prompt history
 
 ---
 
 ## Inspiration
 
-This project grew out of experimenting with prompt engineering through small, incremental prompt changes and observing how those changes affected AI behavior.
+This project grew out of experimenting with prompt engineering through small, incremental prompt improvements and observing how those changes affected AI output.
 
-One observation quickly became clear:
+One important lesson quickly became clear:
 
-A prompt that includes information about the audience, role, goal, and desired output often performs dramatically better than a prompt that only describes the task.
+> Better prompts usually start with better questions.
 
-`prompt` aims to make it easy to include that context from the start.
+`prompt` exists to ask those questions for you.
 
 ---
 
 ## Core Idea
 
-Good prompts usually start with good questions.
+Good prompts come from good requirements.
 
-`prompt` asks those questions for you.
+Good requirements come from good questions.
+
+`prompt` helps you ask those questions and turns the answers into a useful starting prompt.
