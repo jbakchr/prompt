@@ -6,23 +6,23 @@
 
 prompt is a CLI for creating, improving, and reviewing AI prompts.
 
-The goal is NOT to create the ultimate prompt engineering platform.
+The goal is NOT to build the ultimate prompt engineering platform.
 
 The goal is:
 
-👉 Make it faster and easier to create good prompts from the command line.
-
-The CLI should help users think about the information that often improves prompt quality:
-
-- Goal
-- Audience
-- Role
-- Instructions
-- Output Format
+👉 Make it fast and easy to create useful prompts from the command line.
 
 The generated prompt does not need to be perfect.
 
 It only needs to be a strong starting point that can be refined over time.
+
+The project focuses on reducing the friction between:
+
+"I know what I want"
+
+and
+
+"I know how to ask an AI for it."
 
 ---
 
@@ -30,21 +30,22 @@ It only needs to be a strong starting point that can be refined over time.
 
 The goal is NOT:
 
-- Generating giant prompts
 - Prompt perfection
+- Giant prompts
+- Prompt engineering theory
 - Complex prompt frameworks
-- Teaching prompt engineering theory
+- Prompt marketplaces
 
 The goal is:
 
-👉 Generate useful prompts with minimal friction.
+👉 Generate useful starting prompts quickly.
 
 Success is measured by questions such as:
 
-- Does prompt create generate useful prompt drafts?
+- Does prompt create generate useful prompts?
 - Does prompt improve make prompts noticeably better?
-- Does prompt review provide actionable feedback?
-- Is using the CLI faster than starting with a blank file?
+- Does prompt review provide useful feedback?
+- Would I actually use this from my terminal?
 
 ---
 
@@ -61,18 +62,20 @@ Improve based on real usage.
 The progression should be:
 
 Create
-    ↓
+↓
 Improve
-    ↓
+↓
 Review
-    ↓
-Enhance UX
+↓
+Better Workflow
+↓
+Prompt Library
 
 rather than:
 
-Build every possible feature
-    ↓
-Hope people use it
+Add lots of features
+↓
+Hope people use them
 
 ---
 
@@ -82,19 +85,23 @@ Hope people use it
 
 Purpose:
 
-Generate a first version of a prompt.
+Generate a useful starting prompt.
 
-The CLI should ask questions such as:
+The user answers a guided series of questions:
 
-- What is the goal?
+- What should the AI do?
 - Who is the intended audience?
-- Should the AI take on a role?
+- What role should the AI take on?
 - Any specific instructions?
 - Desired output format?
 
 The answers are sent to an AI model.
 
-The AI returns a prompt draft.
+The AI generates a prompt.
+
+The generated prompt is displayed in a dedicated Rich panel.
+
+This command is currently implemented and functional.
 
 ---
 
@@ -109,16 +116,20 @@ The CLI should:
 - Read an existing prompt
 - Ask what should be improved
 - Send prompt + improvement request to an AI
-- Generate an improved version
+- Generate an improved prompt
 
 Examples:
 
 - Too verbose
 - Too short
-- Too generic
-- Produces too much code
 - Wrong audience
 - Missing structure
+- Produces too much code
+- Produces too little code
+
+Status:
+
+Planned.
 
 ---
 
@@ -136,6 +147,10 @@ The AI should provide:
 
 The goal is constructive feedback, not scoring prompts.
 
+Status:
+
+Planned.
+
 ---
 
 ## 📋 Prompt Creation Philosophy
@@ -148,117 +163,118 @@ Instead of:
 
 Summarize this article.
 
-A more useful prompt might include:
+A stronger prompt might include:
 
 - A role
 - An audience
 - Additional instructions
-- Desired output format
+- Output formatting requirements
 
-The CLI should help users think about these aspects.
-
----
-
-## ✅ MVP Scope
-
-The first useful version should only contain:
-
-```bash
-prompt create
-prompt improve
-prompt review
-```
-
-Nothing else is required.
-
-A small tool that works well is preferable to a larger tool with unfinished features.
+The CLI helps users think about this context.
 
 ---
 
-## ⚙️ Current Project Status
+## ✅ Current Project Status
 
-### Planning
+### Phase 1: Prompt Creation
 
-✅ Project idea defined
+Implemented:
 
-✅ README created
+✅ Typer CLI
 
-✅ ROADMAP created
+✅ Rich terminal UI
 
-✅ Core commands identified
+✅ AI-powered prompt generation
 
-### Planned Commands
+✅ Question panels
 
-- create
-- improve
-- review
+✅ Question tips
 
-### Future Commands
+✅ Example answers
 
-Possible future additions:
+✅ Question numbering
 
-- list
-- show
-- compare
+✅ AI generation spinner
 
-Only add these if they provide genuine value.
+✅ Generated prompt panel
+
+✅ Suggested next steps section
+
+✅ Model selection support
+
+The current implementation produces prompts that are intended to serve as useful starting points.
 
 ---
 
-## 🔍 Key Insights Behind The Project
+## 🔍 Key Insights Discovered
 
 ### 1. Good Questions Lead To Better Prompts
 
-Many prompt problems come from missing context:
+The quality of the generated prompt is heavily influenced by the quality of the user's answers.
 
-- Who is the audience?
-- What is the goal?
-- What output format is desired?
+Helping users answer questions well is nearly as important as generating the prompt itself.
 
-The CLI should help users provide this context.
+Question tips and examples significantly improved output quality.
 
 ---
 
-### 2. Prompt Engineering Is Iterative
+### 2. Prompt Generation Is An AI Task
 
-Prompt creation is rarely a one-step process.
+Originally the project generated prompts using string templates.
+
+The project now uses an AI model to generate prompts.
+
+This produces significantly better results.
+
+Current preferred model:
+
+qwen3:8b
+
+---
+
+### 3. Examples Matter
+
+Adding examples to the prompt sent to the prompt-generation model dramatically improved prompt quality.
+
+The AI now generates prompt templates rather than instructions about prompts.
+
+---
+
+### 4. UX Matters
+
+The user experience improved significantly through:
+
+- Rich question panels
+- Tips
+- Examples
+- Visual separation between questions
+- AI generation spinner
+- Generated prompt panel
+- Suggested next steps
+
+The project is not only about AI quality.
+
+It is also about making prompt creation enjoyable.
+
+---
+
+### 5. Prompt Engineering Is Iterative
+
+Prompt creation rarely happens in one step.
 
 Typical workflow:
 
 Create
-    ↓
+↓
 Use
-    ↓
+↓
 Review
-    ↓
+↓
 Improve
-    ↓
+↓
 Use Again
 
-The CLI should support this workflow.
-
----
-
-### 3. Simplicity Matters
-
-The project should remain:
-
-- CLI-first
-- Fast
-- Focused
-- Practical
-
-Avoid unnecessary complexity.
-
----
-
-### 4. Usefulness Over Features
-
-The most important question is:
-
-"Would I actually use this from my terminal?"
-
-If the answer is no, the feature probably should not be added.
+The CLI should support this process.
 
 ---
 
@@ -266,45 +282,53 @@ If the answer is no, the feature probably should not be added.
 
 Current priority:
 
-Build create
-    ↓
-Validate usefulness
-    ↓
-Build improve
-    ↓
-Build review
+Save Prompts
+↓
+Improve Prompts
+↓
+Review Prompts
 
-The goal is to validate each capability before moving to the next one.
+The core prompt generation experience has been validated.
+
+The focus should now move toward helping users manage, improve, and evaluate prompts.
 
 ---
 
 ## 🎯 Near-Term Focus
 
-### Phase 1
+### Save Generated Prompts
+
+Possible:
+
+```bash
+prompt create --save
+```
+
+Allow users to store prompts for future use.
+
+---
+
+### Build Prompt Improvement
 
 Implement:
 
 ```bash
-prompt create
+prompt improve <prompt-file>
 ```
 
-Questions:
+Allow prompts to be refined through guided AI assistance.
 
-- Goal
-- Audience
-- Role
-- Instructions
-- Output format
+---
 
-Generate prompt.
+### Build Prompt Review
 
-Display prompt.
+Implement:
 
-Allow prompt to be saved.
+```bash
+prompt review <prompt-file>
+```
 
-Success means:
-
-👉 Prompt creation feels genuinely useful.
+Allow prompts to be analyzed and critiqued before use.
 
 ---
 
@@ -312,13 +336,13 @@ Success means:
 
 At this stage:
 
-- Prompt marketplaces
-- Prompt sharing systems
+- Web application
 - User accounts
-- Web applications
-- Complex prompt scoring
+- Prompt marketplace
+- Prompt sharing platform
+- Complex prompt scoring systems
 - Prompt engineering courses
-- Overengineered frameworks
+- Enterprise SaaS platform
 
 Focus remains:
 
@@ -334,34 +358,39 @@ Focus remains:
 
 This is NOT:
 
-👉 A prompt engineering learning platform
+👉 A prompt marketplace
 
-👉 A prompt template marketplace
+👉 A prompt library
 
-👉 A prompt database
+👉 A prompt engineering course
 
 This IS:
 
-👉 A practical CLI for prompt creation and improvement
+👉 A practical CLI for prompt creation and prompt improvement
 
 Built around:
 
-- Asking useful questions
-- Reducing friction
-- Supporting iterative improvement
+- Helpful questions
+- Useful defaults
+- Iterative improvement
+- Minimal friction
 
 ---
 
 ## 🧠 Why This Matters (Personally)
 
-This project exists because creating prompts often begins with an idea but quickly becomes a process of:
+This project exists because prompt creation often starts with:
 
-- Determining audience
-- Defining goals
-- Adding context
-- Refining instructions
+"I know what I want."
 
-Rather than starting from a blank editor every time, I want a CLI that helps me create a good starting prompt and improve it over time.
+but quickly becomes:
+
+- Who is the audience?
+- What role should the AI take on?
+- What format should the output use?
+- What constraints should be added?
+
+Rather than starting from a blank editor every time, I want a CLI that helps generate a useful starting prompt that can be refined over time.
 
 It is:
 
@@ -375,20 +404,20 @@ It is:
 
 Help me:
 
-- Design CLI commands
-- Design user flows
-- Improve prompts sent to AI models
-- Review project structure
-- Keep the scope focused
-- Improve UX
+- Design new commands
+- Improve AI prompt generation
+- Improve CLI UX
+- Build prompt improvement workflows
+- Build prompt review workflows
+- Keep the project focused
 - Identify missing functionality
-- Build features incrementally
+- Avoid overengineering
 
 Avoid:
 
 - unnecessary complexity
 - feature creep
-- overengineering
+- enterprise architecture
 - turning the project into a large platform
 
 ---
@@ -415,8 +444,16 @@ Help me:
 
 Use this context to:
 
+- understand the philosophy of the project
 - stay aligned with project goals
 - avoid feature creep
 - maintain simplicity
 - support incremental development
 - prioritize practical usefulness
+
+Remember:
+
+The goal is not to generate perfect prompts.
+
+The goal is to generate useful starting prompts quickly.
+``
