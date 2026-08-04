@@ -1,20 +1,23 @@
-import typer
 from rich.console import Console
+from rich.panel import Panel
+from yaspin import yaspin
 
 from prompt.ai.client import AIClient
 from prompt.prompts.builder import build_prompt_generation_request
 from prompt.commands.questions import ask_question
 
 
+
 def create() -> None:
     """
     Create a new prompt.
     """
+    
     console = Console()
 
     console.print()
     console.print(
-        " 💬 [italic blue]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic blue]"
+        " 💬 [italic cyan]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic cyan]"
     )
 
     goal = ask_question(
@@ -88,20 +91,58 @@ def create() -> None:
 
     client = AIClient()
 
-    try:
-        prompt_text = client.generate_prompt(request)
+    console.print()
 
-    except RuntimeError as error:
-        typer.echo(
-            f"Error: {error}",
-            err=True,
+    with yaspin(
+        text="🧠 Generating your prompt...",
+        color="cyan",
+    ) as spinner:
+
+        generated_prompt = client.generate_prompt(
+            request
         )
-        raise typer.Exit(code=1)
 
-    typer.echo()
-    typer.echo("=" * 60)
-    typer.echo("Generated Prompt")
-    typer.echo("=" * 60)
-    typer.echo()
-    typer.echo(prompt_text)
-    typer.echo()
+        spinner.text = "Prompt generated"
+        spinner.ok("✅")
+    
+    console.print()
+
+    console.print(
+        Panel(
+            generated_prompt,
+            title="🤖 Generated Prompt",
+            border_style="bold green",
+        )
+    )
+
+    console.print()
+
+    console.print()
+
+    console.print("[bold cyan]👉 Suggested Next Steps[/bold cyan]")
+
+    console.print()
+
+    console.print("• Use the generated prompt as a starting point.")
+
+    console.print()
+
+    console.print("• Save the generated prompt:")
+    console.print("  [green]prompt create --save[/green]")
+
+    console.print()
+
+    console.print("• Try generating the prompt with a different model:")
+    console.print("  [green]prompt create --model <model-name>[/green]")
+
+    console.print()
+
+    console.print("• Improve a prompt:")
+    console.print("  [green]prompt improve <prompt-file>[/green]")
+
+    console.print()
+
+    console.print("• Review a prompt:")
+    console.print("  [green]prompt review <prompt-file>[/green]")
+
+    console.print()
