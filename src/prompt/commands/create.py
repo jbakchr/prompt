@@ -1,4 +1,5 @@
 import typer
+from rich.console import Console
 
 from prompt.ai.client import AIClient
 from prompt.prompts.builder import build_prompt_generation_request
@@ -9,9 +10,12 @@ def create() -> None:
     """
     Create a new prompt.
     """
+    console = Console()
 
-    typer.echo()
-    typer.echo("Let's create a prompt.")
+    console.print()
+    console.print(
+        " 💬 [italic blue]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic blue]"
+    )
 
     goal = ask_question(
         question_number=1,
