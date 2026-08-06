@@ -4,6 +4,36 @@ from rich.console import Console
 from rich.prompt import Confirm
 from rich.prompt import Prompt
 
+
+PROMPTS_DIRECTORY = (
+    Path.home()
+    / ".prompt"
+    / "prompts"
+)
+
+
+def load_prompt(
+    filename: str,
+) -> str:
+    """
+    Load a saved prompt.
+    """
+
+    file_path = (
+        PROMPTS_DIRECTORY
+        / filename
+    )
+
+    if not file_path.exists():
+        raise FileNotFoundError(
+            f"Prompt not found: {file_path}"
+        )
+
+    return file_path.read_text(
+        encoding="utf-8",
+    )
+
+
 def maybe_save_prompt(
     generated_prompt: str,
 ) -> None:
