@@ -6,6 +6,31 @@ from prompt.ai.client import AIClient
 from prompt.commands.questions import ask_question
 from prompt.models.prompt_requirements import PromptRequirements
 from prompt.prompts.builder import build_prompt_generation_request
+from prompt.storage.prompts import maybe_save_prompt
+
+
+def create() -> None:
+    """
+    Create a new prompt.
+    """
+
+    display_create_intro()
+
+    requirements = collect_prompt_requirements()
+
+    generated_prompt = generate_prompt(
+        requirements
+    )
+
+    display_generated_prompt(
+        generated_prompt
+    )
+
+    maybe_save_prompt(
+        generated_prompt
+    )
+
+    display_next_steps()
 
 
 def display_create_intro() -> None:
@@ -20,6 +45,8 @@ def display_create_intro() -> None:
     console.print(
         "💬 [italic cyan]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic cyan]"
     )
+
+    console.print()
 
 
 def collect_prompt_requirements() -> PromptRequirements:
@@ -102,7 +129,7 @@ def generate_prompt(
     requirements: PromptRequirements,
 ) -> str:
     """
-    Generate a prompt using the provided requirements.
+    Generate a prompt from the collected requirements.
     """
 
     request = build_prompt_generation_request(
@@ -114,6 +141,10 @@ def generate_prompt(
     )
 
     client = AIClient()
+
+    console = Console()
+
+    console.print()
 
     with yaspin(
         text="🧠 Generating your prompt...",
@@ -152,17 +183,20 @@ def display_generated_prompt(
     console.print()
 
 
+
 def display_next_steps() -> None:
     """
-    Display suggested next steps.
+    Display suggested next actions.
     """
 
     console = Console()
 
     console.print()
+
     console.print(
         "[bold cyan]👉 Suggested Next Steps[/bold cyan]"
     )
+
     console.print()
 
     console.print(
@@ -171,52 +205,29 @@ def display_next_steps() -> None:
 
     console.print()
 
-    console.print("• Save the generated prompt:")
-    console.print(
-        "  [green]prompt create --save[/green]"
-    )
-
-    console.print()
-
     console.print(
         "• Try generating the prompt with a different model:"
     )
     console.print(
-        "  [green]prompt create --model <model-name>[/green]"
-    )
+            "  [green]prompt create --model <model-name>[/green]"
+        )
 
     console.print()
 
-    console.print("• Improve a prompt:")
+    console.print(
+        "• Improve a saved prompt:"
+    )
     console.print(
         "  [green]prompt improve <prompt-file>[/green]"
     )
 
     console.print()
 
-    console.print("• Review a prompt:")
+    console.print(
+        "• Review a saved prompt:"
+    )
     console.print(
         "  [green]prompt review <prompt-file>[/green]"
     )
 
     console.print()
-
-
-def create() -> None:
-    """
-    Create a new prompt.
-    """
-
-    display_create_intro()
-
-    requirements = collect_prompt_requirements()
-
-    generated_prompt = generate_prompt(
-        requirements
-    )
-
-    display_generated_prompt(
-        generated_prompt
-    )
-
-    display_next_steps()
