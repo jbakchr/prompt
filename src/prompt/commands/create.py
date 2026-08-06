@@ -3,22 +3,30 @@ from rich.panel import Panel
 from yaspin import yaspin
 
 from prompt.ai.client import AIClient
-from prompt.prompts.builder import build_prompt_generation_request
 from prompt.commands.questions import ask_question
+from prompt.models.prompt_requirements import PromptRequirements
+from prompt.prompts.builder import build_prompt_generation_request
 
 
-
-def create() -> None:
+def display_create_intro() -> None:
     """
-    Create a new prompt.
+    Display the create command introduction.
     """
-    
+
     console = Console()
 
     console.print()
+
     console.print(
-        " 💬 [italic cyan]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic cyan]"
+        "💬 [italic cyan]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic cyan]"
     )
+
+
+def collect_prompt_requirements() -> PromptRequirements:
+    """
+    Ask the user a series of questions and collect
+    the information needed to generate a prompt.
+    """
 
     goal = ask_question(
         question_number=1,
@@ -81,7 +89,7 @@ def create() -> None:
         ],
     )
 
-    request = build_prompt_generation_request(
+    return PromptRequirements(
         goal=goal,
         audience=audience,
         role=role,
@@ -89,9 +97,23 @@ def create() -> None:
         output_format=output_format,
     )
 
-    client = AIClient()
 
-    console.print()
+def generate_prompt(
+    requirements: PromptRequirements,
+) -> str:
+    """
+    Generate a prompt using the provided requirements.
+    """
+
+    request = build_prompt_generation_request(
+        goal=requirements.goal,
+        audience=requirements.audience,
+        role=requirements.role,
+        instructions=requirements.instructions,
+        output_format=requirements.output_format,
+    )
+
+    client = AIClient()
 
     with yaspin(
         text="🧠 Generating your prompt...",
@@ -104,7 +126,19 @@ def create() -> None:
 
         spinner.text = "Prompt generated"
         spinner.ok("✅")
-    
+
+    return generated_prompt
+
+
+def display_generated_prompt(
+    generated_prompt: str,
+) -> None:
+    """
+    Display the generated prompt.
+    """
+
+    console = Console()
+
     console.print()
 
     console.print(
@@ -117,32 +151,72 @@ def create() -> None:
 
     console.print()
 
+
+def display_next_steps() -> None:
+    """
+    Display suggested next steps.
+    """
+
+    console = Console()
+
+    console.print()
+    console.print(
+        "[bold cyan]👉 Suggested Next Steps[/bold cyan]"
+    )
     console.print()
 
-    console.print("[bold cyan]👉 Suggested Next Steps[/bold cyan]")
-
-    console.print()
-
-    console.print("• Use the generated prompt as a starting point.")
+    console.print(
+        "• Use the generated prompt as a starting point."
+    )
 
     console.print()
 
     console.print("• Save the generated prompt:")
-    console.print("  [green]prompt create --save[/green]")
+    console.print(
+        "  [green]prompt create --save[/green]"
+    )
 
     console.print()
 
-    console.print("• Try generating the prompt with a different model:")
-    console.print("  [green]prompt create --model <model-name>[/green]")
+    console.print(
+        "• Try generating the prompt with a different model:"
+    )
+    console.print(
+        "  [green]prompt create --model <model-name>[/green]"
+    )
 
     console.print()
 
     console.print("• Improve a prompt:")
-    console.print("  [green]prompt improve <prompt-file>[/green]")
+    console.print(
+        "  [green]prompt improve <prompt-file>[/green]"
+    )
 
     console.print()
 
     console.print("• Review a prompt:")
-    console.print("  [green]prompt review <prompt-file>[/green]")
+    console.print(
+        "  [green]prompt review <prompt-file>[/green]"
+    )
 
     console.print()
+
+
+def create() -> None:
+    """
+    Create a new prompt.
+    """
+
+    display_create_intro()
+
+    requirements = collect_prompt_requirements()
+
+    generated_prompt = generate_prompt(
+        requirements
+    )
+
+    display_generated_prompt(
+        generated_prompt
+    )
+
+    display_next_steps()
