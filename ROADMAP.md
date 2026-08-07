@@ -1,30 +1,29 @@
-# ROADMAP.md
-
-# prompt Roadmap
+# prompt - Roadmap
 
 This roadmap is intentionally simple.
 
 The goal is not to build the ultimate prompt engineering platform.
 
-The goal is to build a practical CLI that helps users create, improve, and review AI prompts with minimal friction.
+The goal is to build a practical CLI that helps users create, review, and improve AI prompts with minimal friction.
 
 ---
 
-# Vision
+## Vision
 
 Create a CLI that helps users:
 
 - Create prompts from guided questions
-- Improve existing prompts
 - Review prompts and receive actionable feedback
+- Improve existing prompts
+- Build a reusable collection of prompts over time
 
 The CLI should act as a practical prompt assistant, not a prompt engineering course.
 
 ---
 
-# Current Status
+## Current Status
 
-## ✅ Phase 1 Complete: Prompt Creation
+### ✅ Phase 1 Complete: Prompt Creation
 
 The `prompt create` command is now a functional MVP.
 
@@ -40,82 +39,101 @@ Implemented:
 
 ✅ AI-powered prompt generation
 
-✅ Terminal spinner while AI generates prompts
+✅ AI generation spinner
 
-✅ Generated prompt displayed in a dedicated panel
+✅ Generated prompt display panel
 
 ✅ Suggested next steps
 
-✅ Model selection support
+✅ Prompt requirements model
+
+✅ Refactored workflow-oriented command structure
 
 The generated prompts are intended to be useful starting points that users can continue refining.
 
 ---
 
-# Phase 2: Save Prompts
+### ✅ Phase 2 Complete: Prompt Saving
 
-## Goal
+Generated prompts can now be saved directly from the create workflow.
 
-Allow generated prompts to be stored and reused.
+Implemented:
 
-## Features
+✅ Optional save step after prompt generation
 
-### Save Generated Prompt
+✅ User-provided filenames
 
-```bash
-prompt create --save
-```
-
-Prompt the user for a filename and save the generated prompt.
-
-Example:
-
-```bash
-prompt create --save
-```
-
-```text
-Filename:
-> summarize-python-article.md
-```
-
-### Default Prompt Location
-
-Store prompts in:
+✅ Default prompt storage location
 
 ```text
 ~/.prompt/prompts/
 ```
 
-### Future Enhancements
+✅ Prompt file persistence
 
-- Overwrite confirmation
-- Automatic filename generation
-- Timestamped filenames
-
-## Success Criteria
-
-- Generated prompts can be saved
-- Saved prompts are easy to find
-- Prompts become reusable assets
+The save workflow keeps prompts available for future review and improvement.
 
 ---
 
-# Phase 3: Prompt Improvement
+### ✅ Phase 3 Complete: Prompt Review
 
-## Goal
+The `prompt review` command is now implemented.
+
+Implemented:
+
+✅ Load saved prompts
+
+✅ AI-powered prompt analysis
+
+✅ Strengths section
+
+✅ Weaknesses section
+
+✅ Suggestions section
+
+✅ Rich review panel
+
+✅ Markdown-rendered review output
+
+✅ No scoring or ratings
+
+The review workflow helps users identify opportunities for improvement before editing a prompt.
+
+Example:
+
+```bash
+prompt review my-prompt.md
+```
+
+Returns:
+
+```text
+✅ Strengths
+
+⚠ Weaknesses
+
+💡 Suggestions
+```
+
+with actionable feedback.
+
+---
+
+## Phase 4: Prompt Improvement
+
+### Goal
 
 Allow users to iteratively improve prompts.
 
-## Features
+### Features
 
-### Improve Existing Prompt
+#### Improve Existing Prompt
 
 ```bash
 prompt improve my-prompt.md
 ```
 
-Read an existing prompt.
+Read a saved prompt.
 
 Ask:
 
@@ -141,134 +159,101 @@ Existing prompt
 Improvement request
 ```
 
-to an AI.
+to an AI model.
 
-Generate an improved version.
+Generate an improved prompt.
 
 Display the improved prompt.
 
-Optionally save it.
+Offer to save the improved version.
 
-## Success Criteria
+---
+
+### Success Criteria
 
 - Improvements feel useful
 - Improvements are specific
 - Workflow is faster than manually editing prompts
+- Improvements build naturally from review feedback
 
 ---
 
-# Phase 4: Prompt Review
+## Phase 5: Better Workflow
 
-## Goal
-
-Allow prompts to be reviewed before they are used.
-
-## Features
-
-### Review Prompt
-
-```bash
-prompt review my-prompt.md
-```
-
-AI analyzes the prompt.
-
-Returns:
-
-- Strengths
-- Weaknesses
-- Suggestions
-
-Example:
-
-```text
-Strengths
----------
-- Clear audience
-- Good role definition
-
-Weaknesses
-----------
-- No output constraints
-- No length guidance
-
-Suggestions
------------
-- Add summary length
-- Specify formatting requirements
-```
-
-## Success Criteria
-
-- Reviews are actionable
-- Reviews are specific
-- Reviews help improve prompts
-
----
-
-# Phase 5: Better Workflow
-
-## Goal
+### Goal
 
 Reduce friction in day-to-day usage.
 
-## Features
+### Features
 
-### Clipboard Support
+#### Clipboard Support
 
-Copy generated prompt directly to clipboard.
+Copy generated prompts directly to the clipboard.
 
-### Prompt Preview
+#### Prompt Preview
 
 Preview prompts before saving.
 
-### Prompt Editing
+#### Prompt Editing
 
 Allow editing before save.
 
-### Prompt Metadata
+#### Prompt Metadata
 
-Store:
+Store metadata such as:
 
-- Model used
 - Creation date
 - Prompt version
+- Model used
 
-## Success Criteria
+#### Review → Improve Workflow
+
+Allow review feedback to drive prompt improvements.
+
+Possible future idea:
+
+```bash
+prompt improve prompt.md --use-review
+```
+
+---
+
+### Success Criteria
 
 - Less manual work
 - Faster workflow
+- Better user experience
 - Better prompt management
 
 ---
 
-# Phase 6: Prompt Library
+## Phase 6: Prompt Library
 
-## Goal
+### Goal
 
 Make prompts searchable and reusable.
 
-## Features
+### Features
 
-### List Prompts
+#### List Prompts
 
 ```bash
 prompt list
 ```
 
-### Show Prompt
+#### Show Prompt
 
 ```bash
 prompt show my-prompt.md
 ```
 
-### Search Prompts
+#### Search Prompts
 
 ```bash
 prompt search summarize
 ```
 
-### Categories
+#### Categories
 
 Examples:
 
@@ -279,7 +264,9 @@ writing/
 learning/
 ```
 
-## Success Criteria
+---
+
+### Success Criteria
 
 - Easy to find prompts
 - Reusable prompt collection
@@ -287,13 +274,13 @@ learning/
 
 ---
 
-# Future Ideas
+## Future Ideas
 
 These ideas are intentionally lower priority.
 
 Implement only if they provide real value.
 
-## Compare Prompts
+### Compare Prompts
 
 ```bash
 prompt compare v1.md v2.md
@@ -301,15 +288,11 @@ prompt compare v1.md v2.md
 
 Compare prompt revisions.
 
----
-
-## Prompt History
+### Prompt History
 
 Track prompt evolution over time.
 
----
-
-## Prompt Templates
+### Prompt Templates
 
 Generate prompts from predefined templates.
 
@@ -321,9 +304,7 @@ Examples:
 - Brainstorming
 - Learning
 
----
-
-## Model-Specific Prompt Generation
+### Model-Specific Prompt Generation
 
 Generate prompts optimized for:
 
@@ -334,25 +315,43 @@ Generate prompts optimized for:
 
 ---
 
-# Current Focus
+## Current Focus
 
 Current priority:
 
 ```text
-Save Prompts
-      ↓
 Improve Prompts
       ↓
-Review Prompts
+Better Workflow
+      ↓
+Prompt Library
 ```
 
-The core prompt creation experience is now in place.
+The create, save, and review workflows are now implemented.
 
-The next goal is helping users manage, improve, and evaluate the prompts they generate.
+The next major goal is helping users improve prompts using AI-assisted refinement.
 
 ---
 
-# Guiding Principle
+## What Has Been Validated
+
+The following assumptions have now been validated through implementation:
+
+✅ Guided questions improve prompt quality
+
+✅ AI-generated prompts are more useful than simple templates
+
+✅ Rich CLI UX improves the experience
+
+✅ Prompt saving is valuable
+
+✅ AI-powered prompt review provides useful feedback
+
+✅ The Create → Review workflow feels natural
+
+---
+
+## Guiding Principle
 
 A small tool that solves a real problem is better than a large tool with unfinished features.
 
@@ -364,6 +363,8 @@ Focus on:
 
 ✅ Iterative improvement
 
+✅ Workflow clarity
+
 Avoid:
 
 ❌ Feature creep
@@ -374,4 +375,8 @@ Avoid:
 
 The goal remains:
 
-👉 Generate useful starting prompts quickly.
+👉 Generate useful prompts quickly.
+
+👉 Review them constructively.
+
+👉 Improve them iteratively.
