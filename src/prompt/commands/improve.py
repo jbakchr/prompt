@@ -26,6 +26,63 @@ PROMPTS_DIR = (
 )
 
 
+def collect_improvement_request() -> str:
+    console.print()
+
+    console.print(
+        "[italic cyan]🔧 DESCRIBE HOW THE PROMPT SHOULD CHANGE "
+        "AND AN AI WILL IMPROVE IT.[/italic cyan]"
+    )
+
+    console.print()
+
+    console.print(
+        Panel(
+            """[bold]What would you like to improve?[/bold]
+
+[yellow]Tip[/yellow]: Describe how you want the prompt to change.
+
+[green]Examples[/green]:
+
+• Make it more suitable for beginners
+• Add a structured output format
+• Generate more code examples
+• Make the response shorter
+• Require step-by-step explanations
+• Focus on practical learning
+
+[dim]Press Enter to cancel[/dim]""",
+            title="Improve Prompt",
+            border_style="blue",
+        )
+    )
+
+    console.print()
+
+    return Prompt.ask(
+        "Your answer",
+        default="",
+    )
+
+
+def display_next_steps():
+    console.print()
+
+    console.print(
+        Panel(
+            """• Test the improved prompt
+
+• Run prompt review on it
+
+• Improve it again if needed
+
+• Save your best version""",
+            title="Suggested Next Steps",
+            border_style="blue",
+        )
+    )
+
+
 def improve(filename: str):
     try:
         original_prompt = load_prompt(
@@ -38,13 +95,15 @@ def improve(filename: str):
         )
         raise SystemExit(1)
 
-    console.print()
-
-    improvement_request = Prompt.ask(
-        "[cyan]What would you like to improve?[/cyan]"
+    improvement_request = (
+        collect_improvement_request()
     )
 
-    console.print()
+    if not improvement_request.strip():
+        console.print(
+            "\n[yellow]Improvement cancelled.[/yellow]"
+        )
+        return
 
     with console.status(
         "[bold green]Improving prompt...[/bold green]"
@@ -77,21 +136,3 @@ def improve(filename: str):
     )
 
     display_next_steps()
-
-
-def display_next_steps():
-    console.print()
-
-    console.print(
-        Panel(
-            """• Test the improved prompt
-
-• Run prompt review on it
-
-• Improve it again if needed
-
-• Save your best version""",
-            title="Suggested Next Steps",
-            border_style="blue",
-        )
-    )
