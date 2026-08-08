@@ -99,17 +99,14 @@ Example:
 
 ```text
 ✅ Strengths
-
 • Clear audience
 • Strong role definition
 
 ⚠ Weaknesses
-
 • Missing output constraints
 • No length guidance
 
 💡 Suggestions
-
 • Specify desired output format
 • Add length requirements
 ```
@@ -118,9 +115,61 @@ Reviews are intended to help users identify opportunities for improvement before
 
 ---
 
-### 🧠 AI-Powered Prompt Generation
+### ✅ Improve Prompts
 
-prompt uses an AI model to transform user requirements into structured prompts.
+Improve an existing prompt through guided AI-assisted refinement.
+
+```bash
+prompt improve prompt.md
+```
+
+The CLI:
+
+1. Loads an existing prompt
+2. Asks what should be improved
+3. Uses AI to make targeted improvements
+4. Explains what changed
+5. Explains why the changes help
+6. Displays the improved prompt
+7. Offers to save the result
+
+Example improvement requests:
+
+- Make the response shorter
+- Add a structured output format
+- Generate more code examples
+- Focus on practical learning
+- Make it suitable for beginners
+- Require step-by-step explanations
+
+Example output:
+
+```text
+✨ Improvements Made
+
+✓ Added a structured output format
+✓ Added dedicated sections for key concepts and examples
+✓ Added formatting requirements for code examples
+
+💡 Why
+
+The changes introduce a clear response structure while
+preserving the prompt's original purpose and audience.
+```
+
+The goal is not to rewrite prompts.
+
+The goal is to improve them incrementally while preserving the user's original intent.
+
+---
+
+### 🧠 AI-Powered Prompt Workflows
+
+prompt uses AI to:
+
+- Generate prompts
+- Review prompts
+- Improve prompts
 
 Generated prompts may include:
 
@@ -130,7 +179,12 @@ Generated prompts may include:
 - Constraints
 - Formatting instructions
 
-The generated prompt is intended to be useful immediately while still serving as a starting point for future refinement.
+Prompt improvements focus on:
+
+- Targeted edits
+- User-requested changes
+- Preserving original intent
+- Iterative refinement
 
 ---
 
@@ -143,8 +197,10 @@ Features include:
 - Question panels
 - Tips and examples
 - AI generation spinner
-- Generated prompt display panel
-- Markdown-rendered prompt reviews
+- Generated prompt display panels
+- Improvement summaries
+- Markdown-rendered reviews
+- Suggested next steps
 
 The project values usability as much as prompt quality.
 
@@ -156,156 +212,3 @@ The project values usability as much as prompt quality.
 
 The goal of prompt is not to generate giant, over-engineered prompts.
 
-The goal is to generate useful prompts quickly.
-
----
-
-### Better Questions Lead To Better Prompts
-
-Prompt quality often depends on the information provided.
-
-prompt helps users think through:
-
-- Tasks
-- Audience
-- Roles
-- Constraints
-- Formatting
-
-which leads to stronger prompts.
-
----
-
-### Iterative Improvement
-
-Prompt engineering is rarely a one-step process.
-
-A typical workflow might look like:
-
-```text
-Create Prompt
-      ↓
-Use Prompt
-      ↓
-Review Prompt
-      ↓
-Improve Prompt
-      ↓
-Use Improved Prompt
-```
-
-prompt is designed around this iterative workflow.
-
----
-
-## Commands
-
-### Create
-
-Generate a prompt through a guided question flow.
-
-```bash
-prompt create
-```
-
----
-
-### Review
-
-Review an existing prompt.
-
-```bash
-prompt review <prompt-file>
-```
-
-Example:
-
-```bash
-prompt review summarize-article.md
-```
-
----
-
-### Improve
-
-Improve an existing prompt.
-
-```bash
-prompt improve <prompt-file>
-```
-
-Status: Planned.
-
----
-
-## Example Workflow
-
-Generate a prompt:
-
-```bash
-prompt create
-```
-
-Save the generated prompt:
-
-```text
-Would you like to save this prompt? [y/N]
-```
-
-Review the prompt:
-
-```bash
-prompt review my-prompt.md
-```
-
-Improve the prompt:
-
-```bash
-prompt improve my-prompt.md
-```
-
----
-
-## Current Status
-
-### ✅ Implemented
-
-- Interactive prompt creation
-- AI-powered prompt generation
-- Rich terminal interface
-- Question panels with tips and examples
-- Prompt generation spinner
-- Generated prompt display panel
-- Prompt saving
-- Prompt review
-- Markdown-rendered reviews
-- Suggested next steps section
-
-### 🚧 Planned
-
-- Prompt improvement
-- Prompt comparison
-- Prompt history
-- Prompt library commands
-
----
-
-## Inspiration
-
-This project grew out of experimenting with prompt engineering through small, incremental prompt improvements and observing how those changes affected AI output.
-
-One important lesson quickly became clear:
-
-> Better prompts usually start with better questions.
-
-prompt exists to ask those questions for you.
-
----
-
-## Core Idea
-
-Good prompts come from good requirements.
-
-Good requirements come from good questions.
-
-prompt helps users ask those questions and turns the answers into a useful starting prompt that can be reviewed and improved over time.
