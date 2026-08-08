@@ -66,6 +66,22 @@ def collect_improvement_request() -> str:
     )
 
 
+def improve_prompt(original_prompt: str, improvement_request: str) -> str:
+    with console.status("[bold green]Improving prompt...[/bold green]"):
+        ai_request = build_improvement_prompt(
+            original_prompt,
+            improvement_request,
+        )
+
+        improved_prompt = (
+            client.generate_prompt(
+                ai_request
+            )
+        )
+        
+        return improved_prompt
+
+
 def improve(filename: str):
     
     # Load prompt
@@ -92,19 +108,7 @@ def improve(filename: str):
         return
 
     # Improve prompt
-    with console.status(
-        "[bold green]Improving prompt...[/bold green]"
-    ):
-        ai_request = build_improvement_prompt(
-            original_prompt,
-            improvement_request,
-        )
-
-        improved_prompt = (
-            client.generate_prompt(
-                ai_request
-            )
-        )
+    improved_prompt = improve_prompt(original_prompt, improvement_request)
 
     # Print improved prompt
     display_improved_prompt(improved_prompt)
