@@ -1,8 +1,9 @@
-from rich.console import Console
-from rich.panel import Panel
-from rich.markdown import Markdown
 from yaspin import yaspin
 
+from prompt.ui.review import (
+    display_review_intro,
+    display_review
+)
 from prompt.ai.client import AIClient
 from prompt.prompts.reviewer import (
     build_prompt_review_request,
@@ -10,22 +11,6 @@ from prompt.prompts.reviewer import (
 from prompt.storage.prompts import (
     load_prompt,
 )
-
-
-def display_review_intro() -> None:
-    """
-    Display introduction.
-    """
-
-    console = Console()
-
-    console.print()
-
-    console.print(
-        "🔍 [italic cyan]REVIEWING PROMPT[/italic cyan]"
-    )
-
-    console.print()
 
 
 def load_existing_prompt(
@@ -67,28 +52,6 @@ def generate_review(
 
     return review
 
-
-def display_review(
-    review: str,
-) -> None:
-    """
-    Display prompt review.
-    """
-
-    console = Console()
-
-    console.print()
-
-    console.print(
-        Panel(
-            Markdown(review),
-            title="📝 Prompt Review",
-            border_style="bold blue",
-            padding=(1, 1)
-        )
-    )
-
-    console.print()
 
 def review(
     filename: str,
