@@ -23,15 +23,35 @@ def display_next_steps():
     console.print()
 
     console.print(
-        Panel(
-            """• Test the improved prompt
-
-• Run prompt review on it
-
-• Improve it again if needed
-
-• Save your best version""",
-            title="Suggested Next Steps",
-            border_style="blue",
-        )
+        "[bold cyan]👉 Suggested Next Steps[/bold cyan]"
     )
+
+    # Test prompt
+    console.print()
+
+    console.print(
+        "• Test the improved prompt."
+    )
+    
+    # Review prompt
+    console.print()
+
+    console.print(
+        "• Run prompt review on it."
+    )
+    console.print(
+        "  [green]prompt review <prompt-file>[/green]"
+    )
+    
+    # Improve prompt
+    console.print()
+
+    console.print(
+        "• Improve it again if needed."
+    )
+    console.print(
+            "  [green]prompt improve <prompt-file>[/green]"
+        )
+    
+    console.print()
+    
