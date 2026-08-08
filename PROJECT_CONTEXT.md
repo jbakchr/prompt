@@ -2,6 +2,8 @@
 
 # prompt – Project Context
 
+---
+
 ## 🧠 What This Project Is
 
 prompt is a CLI for creating, reviewing, and improving AI prompts.
@@ -14,15 +16,30 @@ The goal is:
 
 The generated prompt does not need to be perfect.
 
-It only needs to be a strong starting point that can be refined over time.
+It only needs to be a strong starting point that can be reviewed, improved, and refined over time.
 
 The project focuses on reducing the friction between:
 
+```text
 "I know what I want"
 
 and
 
 "I know how to ask an AI for it."
+```
+
+An important evolution of the project is that it is no longer only a prompt generation tool.
+
+It is now a prompt creation, review, and improvement workflow.
+
+The project helps users:
+
+- Create useful prompts
+- Understand prompt quality
+- Improve prompts iteratively
+- Refine prompts over time
+
+without requiring deep prompt engineering knowledge.
 
 ---
 
@@ -48,6 +65,7 @@ Success is measured by questions such as:
 - Does `prompt create` generate useful prompts?
 - Does `prompt review` provide useful feedback?
 - Does `prompt improve` make prompts noticeably better?
+- Does the workflow feel natural?
 - Would I actually use this from my terminal?
 
 ---
@@ -152,7 +170,7 @@ Status:
 
 Purpose:
 
-Improve an existing prompt.
+Improve an existing prompt through targeted AI-assisted refinement.
 
 Command:
 
@@ -160,27 +178,38 @@ Command:
 prompt improve <prompt-file>
 ```
 
-The CLI should:
+The CLI:
 
-- Read an existing prompt
-- Ask what should be improved
-- Send prompt + improvement request to an AI
-- Generate an improved prompt
-- Display the improved prompt
-- Offer to save the result
+- Reads an existing prompt
+- Asks what should be improved
+- Sends prompt + improvement request to an AI
+- Generates an improved prompt
+- Explains what changed
+- Explains why the changes help
+- Displays the improved prompt
+- Offers to save the result
 
 Examples:
 
-- Too verbose
-- Too short
-- Wrong audience
-- Missing structure
-- Produces too much code
-- Produces too little code
+- Make the response shorter
+- Add a structured output format
+- Generate more code examples
+- Require step-by-step explanations
+- Focus on practical learning
+
+The improvement workflow is intentionally designed to behave like an editor rather than a rewriter.
+
+The AI should:
+
+- Preserve original intent
+- Preserve audience
+- Preserve role
+- Preserve constraints where possible
+- Apply only the requested changes
 
 Status:
 
-🚧 Planned
+✅ Implemented
 
 ---
 
@@ -205,7 +234,7 @@ A stronger prompt might include:
 
 The CLI helps users think about this context.
 
-The quality of the generated prompt is strongly influenced by the quality of the information collected from the user.
+The quality of generated prompts is strongly influenced by the quality of information collected from the user.
 
 ---
 
@@ -239,6 +268,18 @@ The quality of the generated prompt is strongly influenced by the quality of the
 
 ✅ Markdown-rendered review output
 
+✅ Prompt improvement
+
+✅ AI-assisted prompt refinement
+
+✅ Improvement summaries
+
+✅ "Improvements Made" output
+
+✅ Explanation of changes made
+
+✅ Explanation of why changes help
+
 ✅ Suggested next steps
 
 ✅ Workflow-oriented command structure
@@ -247,7 +288,7 @@ The quality of the generated prompt is strongly influenced by the quality of the
 
 ---
 
-### Current Prompt Workflow
+## ✅ Current Prompt Workflow
 
 ```text
 prompt create
@@ -262,7 +303,15 @@ prompt review
     ↓
 Review Feedback
     ↓
-prompt improve (future)
+prompt improve
+    ↓
+Improvements Made
+    ↓
+Improved Prompt
+    ↓
+Save (Optional)
+    ↓
+Repeat
 ```
 
 ---
@@ -281,17 +330,17 @@ src/prompt
 │   ├── review.py
 │   └── questions.py
 ├── models
-│   └── prompt_requirements.py
+│   ├── prompt_requirements.py
+│   └── improvement_result.py
 ├── prompts
 │   ├── builder.py
 │   ├── improver.py
-│   └── reviewer.py
+│   ├── reviewer.py
+│   └── improvement_parser.py
 ├── storage
 │   └── prompts.py
 └── main.py
 ```
-
-Architectural responsibilities:
 
 ### commands/
 
@@ -303,23 +352,10 @@ Example:
 
 ```python
 def create():
-    display_create_intro()
-
-    requirements = collect_prompt_requirements()
-
-    generated_prompt = generate_prompt(
-        requirements
-    )
-
-    display_generated_prompt(
-        generated_prompt
-    )
-
-    maybe_save_prompt(
-        generated_prompt
-    )
-
-    display_next_steps()
+    collect_requirements()
+    generate_prompt()
+    display_prompt()
+    maybe_save_prompt()
 ```
 
 Commands should express workflow, not implementation details.
@@ -429,7 +465,7 @@ Review
 
 Review helps users understand what should be improved.
 
-The review workflow now forms the foundation for future improvement workflows.
+The review workflow became the foundation for improvement workflows.
 
 ---
 
@@ -439,7 +475,7 @@ Commands become easier to maintain when they describe workflow rather than imple
 
 Good:
 
-```python
+```text
 create()
     ↓
 collect requirements
@@ -451,11 +487,35 @@ display prompt
 
 Less desirable:
 
-```python
+```text
 create()
     ↓
 100 lines of mixed responsibilities
 ```
+
+---
+
+### 7. Prompt Improvement Should Behave Like Editing
+
+An important discovery during development of `prompt improve`:
+
+Users generally want focused improvements, not complete rewrites.
+
+The improvement workflow should:
+
+- Preserve intent
+- Preserve audience
+- Preserve role
+- Preserve structure when possible
+- Apply only requested changes
+
+The AI should behave like an editor rather than a rewriter.
+
+Users trust improvements more when they can clearly see:
+
+- What changed
+- Why it changed
+- How the change satisfies their request
 
 ---
 
@@ -464,16 +524,28 @@ create()
 Current priority:
 
 ```text
-Prompt Improvement
-↓
 Better Workflow
+↓
+Review → Improve Workflow
 ↓
 Prompt Library
 ```
 
-The core creation, saving, and review workflows have been validated.
+The core create, save, review, and improve workflows are now implemented.
 
-The next goal is helping users improve prompts using AI-assisted refinement.
+The next goal is reducing friction between review and improvement while helping users refine prompts more effectively over time.
+
+The workflow being optimized today is:
+
+```text
+Create
+↓
+Review
+↓
+Improve
+↓
+Repeat
+```
 
 ---
 
@@ -521,6 +593,7 @@ Built around:
 - Useful defaults
 - Iterative improvement
 - Minimal friction
+- Workflow clarity
 
 ---
 
@@ -528,7 +601,7 @@ Built around:
 
 This project exists because prompt creation often starts with:
 
-"I know what I want."
+> "I know what I want."
 
 but quickly becomes:
 
@@ -537,13 +610,13 @@ but quickly becomes:
 - What format should the output use?
 - What constraints should be added?
 
-Rather than starting from a blank editor every time, I want a CLI that helps generate a useful starting prompt that can be refined over time.
+Rather than starting from a blank editor every time, I want a CLI that helps create a useful starting prompt that can be refined over time.
 
 It is:
 
-- a personal productivity tool
-- built from real prompt engineering experience
-- designed around iterative improvement
+- A personal productivity tool
+- Built from real prompt engineering experience
+- Designed around iterative improvement
 
 ---
 
@@ -553,8 +626,9 @@ Help me:
 
 - Design new commands
 - Improve AI prompt generation
+- Improve prompt review workflows
+- Improve prompt improvement workflows
 - Improve CLI UX
-- Build prompt improvement workflows
 - Keep the project focused
 - Identify missing functionality
 - Improve project structure where beneficial
@@ -562,10 +636,11 @@ Help me:
 
 Avoid:
 
-- unnecessary complexity
-- feature creep
-- enterprise architecture
-- turning the project into a platform
+- Unnecessary complexity
+- Feature creep
+- Enterprise architecture
+- Turning the project into a platform
+- Premature abstraction
 
 ---
 
@@ -576,3 +651,7 @@ Always remember:
 The goal is not to generate perfect prompts.
 
 The goal is to generate useful prompts quickly and help users improve them over time.
+
+When making suggestions:
+
+Prefer improving the existing workflow over adding entirely new features.
