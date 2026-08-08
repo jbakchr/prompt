@@ -84,6 +84,8 @@ def display_next_steps():
 
 
 def improve(filename: str):
+    
+    # Load prompt
     try:
         original_prompt = load_prompt(
             filename
@@ -95,6 +97,7 @@ def improve(filename: str):
         )
         raise SystemExit(1)
 
+    # Collect improvement request
     improvement_request = (
         collect_improvement_request()
     )
@@ -105,6 +108,7 @@ def improve(filename: str):
         )
         return
 
+    # Improve prompt
     with console.status(
         "[bold green]Improving prompt...[/bold green]"
     ):
@@ -119,6 +123,7 @@ def improve(filename: str):
             )
         )
 
+    # Print improved prompt
     console.print()
 
     console.print(
@@ -131,8 +136,10 @@ def improve(filename: str):
 
     console.print()
 
+    # Save prompt
     maybe_save_prompt(
         improved_prompt
     )
 
+    # Display next steps
     display_next_steps()
