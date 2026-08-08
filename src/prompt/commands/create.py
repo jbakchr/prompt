@@ -1,7 +1,7 @@
 from rich.console import Console
-from rich.panel import Panel
 from yaspin import yaspin
 
+from prompt.ui.create import display_create_intro, display_generated_prompt, display_next_steps
 from prompt.ai.client import AIClient
 from prompt.commands.questions import ask_question
 from prompt.models.prompt_requirements import PromptRequirements
@@ -31,22 +31,6 @@ def create() -> None:
     )
 
     display_next_steps()
-
-
-def display_create_intro() -> None:
-    """
-    Display the create command introduction.
-    """
-
-    console = Console()
-
-    console.print()
-
-    console.print(
-        "💬 [italic cyan]DESCRIBE WHAT YOU NEED AND AN AI WILL GENERATE A STARTING PROMPT.[/italic cyan]"
-    )
-
-    console.print()
 
 
 def collect_prompt_requirements() -> PromptRequirements:
@@ -161,73 +145,3 @@ def generate_prompt(
     return generated_prompt
 
 
-def display_generated_prompt(
-    generated_prompt: str,
-) -> None:
-    """
-    Display the generated prompt.
-    """
-
-    console = Console()
-
-    console.print()
-
-    console.print(
-        Panel(
-            generated_prompt,
-            title="🤖 Generated Prompt",
-            border_style="bold green",
-        )
-    )
-
-    console.print()
-
-
-
-def display_next_steps() -> None:
-    """
-    Display suggested next actions.
-    """
-
-    console = Console()
-
-    console.print()
-
-    console.print(
-        "[bold cyan]👉 Suggested Next Steps[/bold cyan]"
-    )
-
-    console.print()
-
-    console.print(
-        "• Use the generated prompt as a starting point."
-    )
-
-    console.print()
-
-    console.print(
-        "• Try generating the prompt with a different model:"
-    )
-    console.print(
-            "  [green]prompt create --model <model-name>[/green]"
-        )
-
-    console.print()
-
-    console.print(
-        "• Improve a saved prompt:"
-    )
-    console.print(
-        "  [green]prompt improve <prompt-file>[/green]"
-    )
-
-    console.print()
-
-    console.print(
-        "• Review a saved prompt:"
-    )
-    console.print(
-        "  [green]prompt review <prompt-file>[/green]"
-    )
-
-    console.print()
