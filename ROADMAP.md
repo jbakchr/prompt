@@ -14,7 +14,7 @@ Create a CLI that helps users:
 
 - Create prompts from guided questions
 - Review prompts and receive actionable feedback
-- Improve existing prompts
+- Improve prompts through iterative refinement
 - Build a reusable collection of prompts over time
 
 The CLI should act as a practical prompt assistant, not a prompt engineering course.
@@ -47,7 +47,7 @@ Implemented:
 
 ✅ Prompt requirements model
 
-✅ Refactored workflow-oriented command structure
+✅ Workflow-oriented command structure
 
 The generated prompts are intended to be useful starting points that users can continue refining.
 
@@ -119,62 +119,79 @@ with actionable feedback.
 
 ---
 
-## Phase 4: Prompt Improvement
+### ✅ Phase 4 Complete: Prompt Improvement
 
-### Goal
+The `prompt improve` command is now implemented.
 
-Allow users to iteratively improve prompts.
+Implemented:
 
-### Features
+✅ Load existing prompts
 
-#### Improve Existing Prompt
+✅ Guided improvement requests
+
+✅ AI-powered prompt improvement
+
+✅ Targeted prompt editing
+
+✅ Preservation of original intent
+
+✅ Improvement summaries
+
+✅ "Improvements Made" section
+
+✅ Explanation of why changes help
+
+✅ Rich improved-prompt display
+
+✅ Optional prompt saving
+
+Example:
 
 ```bash
 prompt improve my-prompt.md
 ```
 
-Read a saved prompt.
-
-Ask:
+Workflow:
 
 ```text
-What would you like to improve?
+Load Prompt
+      ↓
+Describe Desired Improvement
+      ↓
+AI Improves Prompt
+      ↓
+See Improvements Made
+      ↓
+See Why They Help
+      ↓
+Review Improved Prompt
+      ↓
+Save (Optional)
 ```
 
-Examples:
+The improvement workflow is intentionally designed to behave like an editor rather than a rewriter.
 
-- Too verbose
-- Too short
-- Wrong audience
-- Missing structure
-- Produces too much code
-- Produces too little code
-- Other
+The goal is to make focused improvements while preserving the original purpose of the prompt.
 
-Send:
+Example improvement requests:
 
-```text
-Existing prompt
-+
-Improvement request
-```
+- Add a structured output format
+- Make the response shorter
+- Generate more code examples
+- Require step-by-step explanations
+- Focus on practical learning
 
-to an AI model.
+Success Criteria Achieved:
 
-Generate an improved prompt.
+✅ Improvements feel useful
 
-Display the improved prompt.
+✅ Improvements are focused
 
-Offer to save the improved version.
+✅ Original intent is preserved
 
----
+✅ Workflow is faster than manual editing
 
-### Success Criteria
-
-- Improvements feel useful
-- Improvements are specific
-- Workflow is faster than manually editing prompts
-- Improvements build naturally from review feedback
+✅ Users can iteratively refine prompts
 
 ---
 
@@ -182,48 +199,91 @@ Offer to save the improved version.
 
 ### Goal
 
-Reduce friction in day-to-day usage.
+Reduce friction between creating, reviewing, and improving prompts.
 
 ### Features
 
-#### Clipboard Support
-
-Copy generated prompts directly to the clipboard.
-
-#### Prompt Preview
-
-Preview prompts before saving.
-
-#### Prompt Editing
-
-Allow editing before save.
-
-#### Prompt Metadata
-
-Store metadata such as:
-
-- Creation date
-- Prompt version
-- Model used
-
 #### Review → Improve Workflow
 
-Allow review feedback to drive prompt improvements.
+Allow review results to drive prompt improvements.
 
-Possible future idea:
+Possible future command:
 
 ```bash
 prompt improve prompt.md --use-review
 ```
 
+Workflow:
+
+```text
+Review Prompt
+      ↓
+Weaknesses & Suggestions
+      ↓
+Improve Prompt Using Feedback
+```
+
+The long-term goal is for review and improvement to work together seamlessly.
+
 ---
+
+#### Clipboard Support
+
+Allow prompts to be copied directly to the clipboard.
+
+Possible use cases:
+
+```text
+Generate Prompt
+      ↓
+Copy
+      ↓
+Paste Into AI
+```
+
+```text
+Improve Prompt
+      ↓
+Copy
+      ↓
+Paste Into AI
+```
+
+---
+
+#### Prompt Editing
+
+Allow users to edit generated or improved prompts before saving.
+
+Goal:
+
+Reduce the need to leave the CLI for small prompt adjustments.
+
+---
+
+#### Prompt Comparison
+
+Compare two prompt versions.
+
+Example:
+
+```bash
+prompt compare original.md improved.md
+```
+
+Goal:
+
+Help users understand how prompts evolve over time.
 
 ### Success Criteria
 
-- Less manual work
-- Faster workflow
-- Better user experience
-- Better prompt management
+✅ Less manual editing
+
+✅ Faster prompt iteration
+
+✅ Better review → improve workflow
+
+✅ Lower workflow friction
 
 ---
 
@@ -241,11 +301,15 @@ Make prompts searchable and reusable.
 prompt list
 ```
 
+---
+
 #### Show Prompt
 
 ```bash
 prompt show my-prompt.md
 ```
+
+---
 
 #### Search Prompts
 
@@ -253,24 +317,27 @@ prompt show my-prompt.md
 prompt search summarize
 ```
 
+---
+
 #### Categories
 
-Examples:
+Possible examples:
 
 ```text
 summarization/
 coding/
 writing/
 learning/
+research/
 ```
-
----
 
 ### Success Criteria
 
-- Easy to find prompts
-- Reusable prompt collection
-- Useful long-term prompt archive
+✅ Easy to find prompts
+
+✅ Reusable prompt collection
+
+✅ Useful long-term prompt archive
 
 ---
 
@@ -278,40 +345,51 @@ learning/
 
 These ideas are intentionally lower priority.
 
-Implement only if they provide real value.
-
-### Compare Prompts
-
-```bash
-prompt compare v1.md v2.md
-```
-
-Compare prompt revisions.
+Implement only if they provide clear practical value.
 
 ### Prompt History
 
 Track prompt evolution over time.
 
-### Prompt Templates
+Goal:
 
-Generate prompts from predefined templates.
+Help users see how prompts have changed through iterative refinement.
 
-Examples:
+---
 
-- Summarization
-- Code Review
-- Documentation
-- Brainstorming
-- Learning
+### Prompt Explain
 
-### Model-Specific Prompt Generation
+Analyze a prompt and explain:
 
-Generate prompts optimized for:
+- Intended role
+- Intended audience
+- Output format
+- Constraints
+- Potential weaknesses
 
-- GPT models
-- Claude models
-- Gemini models
-- Ollama models
+Possible command:
+
+```bash
+prompt explain prompt.md
+```
+
+Useful when working with older prompts or prompts created by others.
+
+---
+
+### Prompt Testing
+
+Evaluate prompts against sample inputs.
+
+Possible command:
+
+```bash
+prompt test prompt.md
+```
+
+Long-term goal:
+
+Allow prompt quality improvements to be driven by actual results instead of assumptions.
 
 ---
 
@@ -320,16 +398,16 @@ Generate prompts optimized for:
 Current priority:
 
 ```text
-Improve Prompts
+Review
       ↓
-Better Workflow
+Improve
       ↓
-Prompt Library
+Repeat
 ```
 
-The create, save, and review workflows are now implemented.
+The core create, save, review, and improve workflows are now implemented.
 
-The next major goal is helping users improve prompts using AI-assisted refinement.
+The next goal is reducing friction between review and improvement while helping users refine prompts more efficiently over time.
 
 ---
 
@@ -347,7 +425,13 @@ The following assumptions have now been validated through implementation:
 
 ✅ AI-powered prompt review provides useful feedback
 
-✅ The Create → Review workflow feels natural
+✅ AI-assisted prompt improvement is valuable
+
+✅ Users benefit from seeing what changed
+
+✅ Users benefit from understanding why changes were made
+
+✅ The Create → Review → Improve workflow feels natural
 
 ---
 
@@ -365,6 +449,8 @@ Focus on:
 
 ✅ Workflow clarity
 
+✅ Minimal friction
+
 Avoid:
 
 ❌ Feature creep
@@ -372,6 +458,8 @@ Avoid:
 ❌ Overengineering
 
 ❌ Prompt perfectionism
+
+❌ Becoming a platform
 
 The goal remains:
 
