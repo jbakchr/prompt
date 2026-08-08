@@ -14,6 +14,7 @@ from prompt.prompts.improver import (
 from prompt.storage.prompts import (
     maybe_save_prompt,
 )
+from prompt.ui.improve import display_improved_prompt, display_next_steps
 
 console = Console()
 
@@ -65,24 +66,6 @@ def collect_improvement_request() -> str:
     )
 
 
-def display_next_steps():
-    console.print()
-
-    console.print(
-        Panel(
-            """• Test the improved prompt
-
-• Run prompt review on it
-
-• Improve it again if needed
-
-• Save your best version""",
-            title="Suggested Next Steps",
-            border_style="blue",
-        )
-    )
-
-
 def improve(filename: str):
     
     # Load prompt
@@ -124,17 +107,7 @@ def improve(filename: str):
         )
 
     # Print improved prompt
-    console.print()
-
-    console.print(
-        Panel(
-            improved_prompt,
-            title="✨ Improved Prompt",
-            border_style="green",
-        )
-    )
-
-    console.print()
+    display_improved_prompt(improved_prompt)
 
     # Save prompt
     maybe_save_prompt(
