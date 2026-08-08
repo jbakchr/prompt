@@ -19,6 +19,23 @@ def display_improved_prompt(improved_prompt: str) -> None:
     console.print()
 
 
+def display_improvement_summary(
+    improvements: str,
+    why: str,
+):
+    console.print()
+
+    console.print(
+        Panel(
+            f"{improvements}\n\n"
+            f"[bold cyan]Why[/bold cyan]\n\n"
+            f"{why}",
+            title="✨ Improvements Made",
+            border_style="green",
+        )
+    )
+
+
 def display_next_steps():
     console.print()
 

@@ -14,7 +14,10 @@ from prompt.prompts.improver import (
 from prompt.storage.prompts import (
     maybe_save_prompt,
 )
-from prompt.ui.improve import display_improved_prompt, display_next_steps
+from prompt.prompts.improvement_parser import (
+    parse_improvement_result,
+)
+from prompt.ui.improve import display_improved_prompt, display_improvement_summary, display_next_steps
 
 console = Console()
 
@@ -66,20 +69,29 @@ def collect_improvement_request() -> str:
     )
 
 
-def improve_prompt(original_prompt: str, improvement_request: str) -> str:
-    with console.status("[bold green]Improving prompt...[/bold green]"):
-        ai_request = build_improvement_prompt(
-            original_prompt,
-            improvement_request,
+def improve_prompt(
+    original_prompt: str,
+    improvement_request: str,
+):
+    with console.status(
+        "[bold green]Improving prompt...[/bold green]"
+    ):
+        ai_request = (
+            build_improvement_prompt(
+                original_prompt,
+                improvement_request,
+            )
         )
 
-        improved_prompt = (
+        response = (
             client.generate_prompt(
                 ai_request
             )
         )
-        
-        return improved_prompt
+
+        return parse_improvement_result(
+            response
+        )
 
 
 def improve(filename: str):
@@ -108,15 +120,24 @@ def improve(filename: str):
         return
 
     # Improve prompt
-    improved_prompt = improve_prompt(original_prompt, improvement_request)
-
-    # Print improved prompt
-    display_improved_prompt(improved_prompt)
-
-    # Save prompt
-    maybe_save_prompt(
-        improved_prompt
+    result = improve_prompt(
+        original_prompt,
+        improvement_request,
     )
+
+    display_improvement_summary(
+        result.improvements,
+        result.why,
+    )
+
+    display_improved_prompt(
+        result.prompt
+    )
+
+    maybe_save_prompt(
+        result.prompt
+    )
+
 
     # Display next steps
     display_next_steps()
